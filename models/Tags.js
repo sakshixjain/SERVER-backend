@@ -1,12 +1,13 @@
 const mongoose= require("mongoose");
 
-const tagsScema= new mongoose.Schema({
+const tagsSchema= new mongoose.Schema({
     name:{
         type:String,
         required:true,
     },
     decription:{
         type:String,
+        required:true,
     },
     course:{
         type:mongoose.Schema.Types.ObjectId,
@@ -14,4 +15,4 @@ const tagsScema= new mongoose.Schema({
     },
 });
 
-module.exports= mongoose.model("Tag", tagsScema);
+module.exports= mongoose.model("Tag", tagsSchema);
