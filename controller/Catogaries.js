@@ -1,8 +1,9 @@
-const Tag= require("../models/Tags");
+const Catogary = require("../models/Catogary");
+const Tag= require("../models/Catogary");
 
 //create tag ka handler function
 
-exports.createTag= async (req,res)=>{
+exports.createCato= async (req,res)=>{
     try{
 
         const {name, description}= req.body;
@@ -36,13 +37,13 @@ exports.createTag= async (req,res)=>{
 
 ///get all of the tags
 
-exports.showAlltags= async (req,res)=>{
+exports.showAllCatos= async (req,res)=>{
     try{
-        const allTags= await Tag.find({},{name:true, description:description});
+        const allCatos= await Catogary.find({},{name:true, description:description});
         res.status(200).json({
             success:true,
             messgae:"All tags returned successfully",
-            allTags,
+            allCatos,
         })
  
     }catch(error){
