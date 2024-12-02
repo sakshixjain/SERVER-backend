@@ -50,4 +50,50 @@ return res.status(400).json({
 };
 
 //home word : updated section
+exports.updateSubSection= async (req,res)=>{
+    try{
+        const {sectionId,title, timeDuration, description, videoUrl}= req.body;
+        //extract file
+        const video = req.files.videoFile;
+        //validation
+        if(!sectionId || !title || !timeDuration || !description || !videoUrl){
+            return res.staus(400).json({
+                success:false,
+                message:"all fields are required",
+            });
+        }
+
+        return res.status(200).json({
+            success:true,
+            message:"sub section updated successfully",
+        });
+
+
+
+    }catch(error){
+        return res.status(400).json({
+            success:false,
+            message:"something went wrong",
+        });
+    }
+}
+
+
 //delete subsection
+exports.deleteSubSection= async (req,res)=>{
+    try{
+        //data fetch
+
+        //return response
+        return res.status(200).json({
+            success:true,
+            message:"sub section updated successfully",
+        });
+
+    }catch(error){
+        return res.status(400).json({
+            success:false,
+            message:"something went wrong",
+        });
+    }
+}
