@@ -60,7 +60,7 @@ const options={
     currency,
     receipt:Math.random(Date.now()).toString(),
     notes:{
-        course_id:course_id,
+        courseId:course_id,
         userId,
     }
 };
@@ -94,4 +94,82 @@ message:"could not initate order",
 
 //verify signature of razorpay and server
 
-exports.
+exports.verifySignature= async (req,res)=>{
+
+       //server ke ander secret andd razor pay ke secret ki..matching
+
+
+    const webhookSecret = "12345678";
+
+    const signature= req.header["x-razorpay-signature"];
+
+  const shasum = crypto.createHmac("sha256", webhookSecret);
+  
+  shasum.update(JSON.stringify(req.body));
+
+  const digest= shasum.digest("hex");
+
+  if(signature===digest){
+    console.log("payment is authorized");
+
+    const {courseId,userId}= req.body.payload.payment.entity.notes;
+
+    try {
+        
+        //fulfill the action
+
+        //find the course and enrooll student in the course
+
+        const enrolledCourse = await Course.findByIdAndUpdate(
+          {  _id: courseId},
+          {$push:{studentsEnrolled: userId}},
+          {new:true},
+        );
+
+        if(!enrolledCourse){
+         return res.json({
+            success:false,
+            message:error.message,
+         });
+        }
+
+        console.log(enrolledCourse);
+
+        //find the srtudent and the course to thier list enrolled courses
+
+        const enrolledStudent = await User.findOneAndUpdate({_id:userId},
+            {$push:{
+                courses:courseId}},
+                {new:true},
+        );
+
+        console.log(enrolledStudent);
+
+        //mail send krdo
+
+        const emailResponse= await mailSender(enrolledStudent.email,
+            "Congratulations from codehelp", 
+            "you are onborded into new codehelp"
+        );
+
+        console.log(emailResponse);
+
+        return res.status(200).json({
+            success:true,
+            message:"signature verifed and course added",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message:error.message,
+        });
+    }
+  }
+  else{
+    return res.status(400).json({
+        success:false,
+        message:"invalid request",
+    });
+
+  }
+}
