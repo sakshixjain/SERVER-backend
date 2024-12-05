@@ -1,6 +1,7 @@
 const User= require("../models/User");
 const mailSender= require("../utils/mailSender");
 const bcrypt= require("bcrypt");
+const Crypto = require("crypto");
 //reset password token
 exports.resetPasswordToken= async (req, res)=>{
 
@@ -16,7 +17,7 @@ exports.resetPasswordToken= async (req, res)=>{
      })
  } 
 //generate token
-const token= crypto.randomUUID();
+const token= Crypto.randomUUID();
 //update user by dding token
 const updatedDetails= await User.findOneAndUpdate(
  {email:email},

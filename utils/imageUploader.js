@@ -1,4 +1,4 @@
-const cloudinary= require("clodinary").v2;
+const cloudinary= require("cloudinary").v2;
 
 exports.uploadImageToCloudinary= async(file,folder,height,quality)=>{
     try{
