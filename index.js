@@ -13,6 +13,7 @@ const {cloudinaryConnect}= require("./config/Cloudinary");
 const fileUpload= require("express-fileupload");
 const dotenv= require("dotenv");
 
+dotenv.config();
 const PORT= process.env.PORT || 4000;
 
 //database connect
