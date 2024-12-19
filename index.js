@@ -5,7 +5,7 @@ const userRoutes = require("./routes/User");
 const courseRoutes = require("./routes/Course");
 const profileRoutes= require("./routes/Profile");
 const paymentRoutes= require("./routes/Payment");
-
+const contactUsRoute = require("./routes/ContactUs");
 const database= require("./config/database");
 const cookieParser= require("cookie-parser");
 const cors = require("cors");
@@ -14,7 +14,7 @@ const fileUpload= require("express-fileupload");
 const dotenv= require("dotenv");
 
 dotenv.config();
-const PORT= process.env.PORT || 4000;
+const PORT= process.env.PORT || 3000;
 
 //database connect
  
@@ -43,6 +43,7 @@ app.use("api/v1/auth",userRoutes);
 app.use("api/v1/course", courseRoutes);
 app.use("api/v1/payment", paymentRoutes);
 app.use("api/v1/proflie",profileRoutes);
+app.use("/api/v1/reach", contactUsRoute);
 
 app.get("/",(req,res)=>{
     return res.json({
